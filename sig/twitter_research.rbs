@@ -1,0 +1,158 @@
+# TypeProf 0.21.3
+
+# Classes
+module TwitterResearch
+  VERSION: String
+  CONFIG_FILENAME: String
+  @logger: untyped
+
+  def self.configure: -> untyped
+  def self.read_config: (String file) -> nil
+  def self.data_directory=: (untyped path) -> untyped
+  def self.api_token=: (untyped token) -> untyped
+  def self.raise_config_error: -> untyped
+  def logger: -> untyped
+  def stored: (untyped _basename) -> nil
+  def with_rate_retry: { -> untyped } -> untyped
+  def twitter: (untyped key) -> (singleton(Follower) | singleton(User))
+
+  class Error < StandardError
+    def self.by_request: (untyped req) -> (Error | RateLimitError)
+  end
+
+  class ConfigError < StandardError
+  end
+
+  class ConnectionError < StandardError
+  end
+
+  class RateLimitError < StandardError
+    attr_reader reset_at: Time
+    attr_reader endpoint_limit_by_fifteen_minutes: untyped
+    def initialize: (untyped req) -> void
+    def message: -> String
+  end
+
+  class ProbabilityZeroError < StandardError
+  end
+
+  class Progress
+    @output: Proc
+    @count: Integer
+
+    attr_writer step: Integer
+    attr_writer total: bot
+    def initialize: (?output: Proc) -> void
+    def tick: -> String
+    def stats: -> untyped
+    def reset: -> Integer
+  end
+
+  module Pagination
+    def with_pagination: (?{max_results: Integer, user.fields: String} params) ?{ ({max_results: Integer, user.fields: String}) -> Request } -> Array[untyped]
+  end
+
+  module Retryable
+    def with_limit_retry: ?{ -> untyped } -> nil
+    def wait_in_seconds: -> Integer
+    def rate_limit_reset_at: -> Time
+  end
+
+  class Request
+    include Retryable
+    self.@base_uri: String
+    @url: URI::Generic
+    @to_h: untyped
+
+    attr_reader path: untyped
+    attr_reader response: untyped
+    def initialize: (String path) -> void
+    def self.get: (untyped path, ?Hash[untyped, untyped] params) -> Request
+    def call: (?Hash[:"user.fields" | :max_results, Integer | String] params) -> Request
+    def successfull?: -> false
+    def body: -> untyped
+    def to_h: -> untyped
+    def method_missing: (:data | :meta method_name, *untyped noname) -> untyped
+    def respond_to?: (untyped method_name, ?false include_private) -> bool
+
+    private
+    def headers: -> {Authorization: String}
+  end
+
+  class Storage
+    @content: untyped
+
+    attr_accessor basename: untyped
+    alias name basename
+    def initialize: (untyped basename) -> void
+    def filename: -> String
+    def filepath: -> String
+    def exist?: -> bool
+    def write: (untyped content) -> (Integer | false)
+    def content: -> untyped
+  end
+
+  class User
+    FIELDS: [:created_at, :description, :entities, :id, :location, :name, :pinned_tweet_id, :profile_image_url, :protected, :public_metrics, :url, :username, :verified, :withheld]
+
+    def self.find_by_usernames: (*untyped usernames) -> Request
+  end
+
+  class Follower
+    MAX_RESULTS: Integer
+    USER_FIELDS: [:created_at, :description, :entities, :id, :location, :name, :url, :pinned_tweet_id, :profile_image_url, :protected, :public_metrics, :username, :verified, :withheld]
+    extend Pagination
+
+    def self.find: (untyped id) -> Array[untyped]
+    def self.raise_on_error: -> untyped
+    def self.with_retry: -> untyped
+  end
+
+  class TextTransformer
+    attr_accessor text: String
+    def initialize: (?String text) -> void
+    def words: -> (Array[Array[String] | String])
+    def filter: -> untyped
+    def tally: -> untyped
+
+    private
+    def stopwords: -> untyped
+  end
+
+  class NumericPrediction
+    @records: Array[untyped]
+    @stdev: nil
+    @mean: nil
+
+    def initialize: -> void
+    def []: (untyped x) -> ((Complex | Float)?)
+    def <<: (untyped record) -> Array[untyped]
+    def mean: -> untyped
+    def stdev: -> untyped
+
+    private
+    def calculate_mean_stdev: -> untyped
+    def low_records_result: (untyped x) -> Float?
+  end
+
+  class Bayes
+    @total: Integer
+    @labels: Hash[untyped, untyped]
+    @data: Hash[untyped, Hash[untyped, untyped]]
+    @cache: Hash[untyped, Hash[untyped, untyped]]
+
+    def initialize: -> void
+    def reset_cache: -> Hash[untyped, untyped]
+    def train: (untyped label, untyped data) -> untyped
+    def labels: -> Array[untyped]
+    def total: (untyped key) -> Integer
+    def total_value: (untyped key, untyped value) -> (Complex | Float | Integer | Rational)
+    def label_prob: (untyped label) -> Rational
+    def prob: (untyped key) -> Hash[untyped, untyped]
+    def evaluate: (untyped entry) -> Hash[untyped, untyped]
+    def classify: (untyped entry) -> :unkown
+
+    private
+    def record: (untyped label, untyped key, untyped value) -> untyped
+  end
+end

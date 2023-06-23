@@ -1,0 +1,17 @@
+# 3rd-party libraries
+vendor/
+# stub for data storage
+/data/
+/import/
+/export/
+# test coverage
+/coverage/
+# run logs
+/log/
+
+# database configuration
+mongoid.yml
+
+# current run script
+./run.rb
+run.sh

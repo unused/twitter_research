@@ -1,0 +1,68 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.twitter.com/2/users/48285188
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - Bearer AAA...
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 10 Dec 2022 19:12:29 UTC
+      Perf:
+      - '7626143928'
+      Server:
+      - tsa_o
+      Set-Cookie:
+      - guest_id=v1%3A167069954955928947; Max-Age=34214400; Expires=Wed, 10 Jan 2024
+        19:12:29 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      Api-Version:
+      - '2.56'
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache, no-store, max-age=0
+      Content-Length:
+      - '94'
+      X-Access-Level:
+      - read
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Transaction-Id:
+      - 5f9ba4c781c3964b
+      X-Xss-Protection:
+      - '0'
+      X-Rate-Limit-Limit:
+      - '300'
+      X-Rate-Limit-Reset:
+      - '1670700449'
+      Content-Disposition:
+      - attachment; filename=json.json
+      X-Content-Type-Options:
+      - nosniff
+      X-Rate-Limit-Remaining:
+      - '299'
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Response-Time:
+      - '122'
+      X-Connection-Hash:
+      - 564901832d69e32a1508012a1f1dbbc8ba0c5a8211a778db1c90afca811861b8
+    body:
+      encoding: ASCII-8BIT
+      string: '{"data":{"id":"48285188","name":"christoph lipautz","username":"lipdaguit"}}'
+  recorded_at: Sat, 10 Dec 2022 19:12:29 GMT
+recorded_with: VCR 6.1.0

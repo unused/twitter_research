@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "bundler/setup"
+require "twitter_research"
+require "twitter_research/database"
+
+TwitterResearch.configure!
+
+# Guessing is a quickshot to check classification of users.
+class Guessing
+  attr_reader :extend
+
+  def initialize = @extend = TwitterResearch::UserExtend.new(nil)
+
+  def guess
+    TwitterResearch::Database::User.random.tap do |user|
+      @extend.user = user
+      @extend.classify
+    end
+  end
+
+  def summarise
+    user = guess
+    [user._role, user.websites&.join('|'), user.description.gsub("\n", "")].join ', '
+  end
+end
+
+require "pry"
+binding.pry # rubocop:disable Lint/Debugger

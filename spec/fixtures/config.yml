@@ -1,0 +1,6 @@
+api_token: 'my-twitter-secret'
+data_directory: './spec/fixtures/data/'
+mongodb:
+  database: test_twitter_research
+  hosts:
+    - localhost:27017

@@ -1,0 +1,88 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.twitter.com/2/users/48285188/followers?max_results=1000&user.fields=created_at,description,entities,id,location,name,url,pinned_tweet_id,profile_image_url,protected,public_metrics,username,verified,withheld
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - Bearer my-twitter-secret
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Perf:
+      - '7626143928'
+      Content-Type:
+      - application/problem+json
+      Cache-Control:
+      - no-cache, no-store, max-age=0
+      Content-Length:
+      - '99'
+      X-Transaction-Id:
+      - 80699e135f0c3e94
+      X-Response-Time:
+      - '101'
+      X-Connection-Hash:
+      - 4f4fba7f28ec78fe76d92181dac30963a06ab4884454965c4d36872f15491f6d
+      Date:
+      - Sat, 15 Apr 2023 22:42:48 GMT
+      Server:
+      - tsa_o
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "data": [
+            {
+              "public_metrics": {
+                "followers_count": 379,
+                "following_count": 1044,
+                "tweet_count": 632,
+                "listed_count": 3
+              },
+              "verified": false,
+              "created_at": "2014-06-26T13:26:52.000Z",
+              "username": "smth",
+              "pinned_tweet_id": "1...4",
+              "url": "https://t.co/...",
+              "location": "LATAM | USA",
+              "id": "2...4",
+              "description": "W...e.",
+              "entities": {},
+              "protected": false,
+              "name": "L...t",
+              "profile_image_url": "https://pbs.twimg.com/profile_images/1...0/TxMEbIVU_normal.jpg"
+            },
+            {
+              "public_metrics": {
+                "followers_count": 67,
+                "following_count": 848,
+                "tweet_count": 1,
+                "listed_count": 0
+              },
+              "verified": false,
+              "created_at": "2009-06-27T00:42:56.000Z",
+              "username": "Z...1",
+              "id": "5...6",
+              "description": "",
+              "protected": false,
+              "name": "Z...n",
+              "profile_image_url": "https://pbs.twimg.com/profile_images/2...1/myspace_normal_normal.jpg"
+            }
+          ],
+          "meta": {
+            "result_count": 2
+          }
+        }
+  recorded_at: Sat, 15 Apr 2023 22:42:49 GMT
+recorded_with: VCR 6.1.0

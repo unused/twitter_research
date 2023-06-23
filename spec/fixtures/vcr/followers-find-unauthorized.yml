@@ -1,0 +1,51 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.twitter.com/2/users/48285188/followers?max_results=1000&user.fields=created_at,description,entities,id,location,name,url,pinned_tweet_id,profile_image_url,protected,public_metrics,username,verified,withheld
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - Bearer my-twitter-secret
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Perf:
+      - '7626143928'
+      Content-Type:
+      - application/problem+json
+      Cache-Control:
+      - no-cache, no-store, max-age=0
+      Content-Length:
+      - '99'
+      X-Transaction-Id:
+      - 80699e135f0c3e94
+      X-Response-Time:
+      - '101'
+      X-Connection-Hash:
+      - 4f4fba7f28ec78fe76d92181dac30963a06ab4884454965c4d36872f15491f6d
+      Date:
+      - Sat, 15 Apr 2023 22:42:48 GMT
+      Server:
+      - tsa_o
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "title": "Unauthorized",
+          "type": "about:blank",
+          "status": 401,
+          "detail": "Unauthorized"
+        }
+  recorded_at: Sat, 15 Apr 2023 22:42:49 GMT
+recorded_with: VCR 6.1.0

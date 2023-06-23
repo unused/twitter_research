@@ -1,0 +1,37 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'twitter_research'
+
+@command = ARGV.last
+
+def print_usage
+  puts <<~USAGE
+    Command #{@command} not registered, usage:
+      $ twitter-research init
+  USAGE
+end
+
+if @command != "init"
+  print_usage
+  exit(-1)
+end
+
+config_file = File.join Dir.home, '.config', TwitterResearch::CONFIG_FILENAME
+data_dir = File.join Dir.home, 'twitter-research-data/'
+
+# Create configuration file
+unless File.exist? config_file
+  File.write config_file, <<~CONFIG_FILE
+    api_token: 'Your Twitter Secret'
+    data_directory: '#{data_dir}'
+    # mongodb:
+    #   database: twitter_research
+    #   hosts:
+    #     - localhost:27017
+  CONFIG_FILE
+end
+
+# Create data directory
+Dir.mkdir unless Dir.exist? data_dir
+
